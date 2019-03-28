@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import java.net.HttpURLConnection
 import java.net.URL
-
-import android.R
+import kotlinx.android.synthetic.main.activity_main.*
+import android.R.layout
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
