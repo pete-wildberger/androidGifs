@@ -6,17 +6,46 @@ import java.net.HttpURLConnection
 import java.net.URL
 import kotlinx.android.synthetic.main.activity_main.*
 import android.R.layout
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 
-
+val TAG:String = "TEXT"
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        editText.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                Log.v(TAG, "Text in EditText : "+s)
+            }
+
+        })
+        editText.setOnEditorActionListener { textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+
+                Log.v(TAG, "submit")
+                hideKeyboard(textView)
+                handled = true
+                }
+
+            handled
+        }
+
     }
     private fun getGifs(input: String){
         val connection = URL("http://api.giphy.com/v1/gifs/search?q="+ input + "&api_key=dc6zaTOxFJmzC").openConnection() as HttpURLConnection
