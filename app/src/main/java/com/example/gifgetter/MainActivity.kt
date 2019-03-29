@@ -13,11 +13,15 @@ import android.graphics.drawable.Drawable
 import android.support.v7.widget.GridLayoutManager
 import java.io.InputStream
 import android.support.v7.widget.LinearLayoutManager
+import android.os.AsyncTask
+
+
 
 
 val TAG:String = "TEXT"
 class MainActivity : AppCompatActivity() {
     val gifUrls: ArrayList<String> = ArrayList()
+    lateinit var searchString: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,40 +29,33 @@ class MainActivity : AppCompatActivity() {
         gif_list.layoutManager = LinearLayoutManager(this)
 
         // Access the RecyclerView Adapter and load the data into it
-        gif_list.adapter = AnimalAdapter(gifUrls, this)
-        editText.addTextChangedListener(object : TextWatcher {
+        gif_list.adapter = GifsAdapter(gifUrls, this)
 
-            override fun afterTextChanged(s: Editable) {}
-
-            override fun beforeTextChanged(s: CharSequence, start: Int,
-                                           count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int,
-                                       before: Int, count: Int) {
-                Log.v(TAG, "Text in EditText : "+s)
-            }
-
-        })
         editText.setOnEditorActionListener { textView, action, event ->
             var handled = false
             if (action == EditorInfo.IME_ACTION_DONE) {
-
                 Log.v(TAG, "submit")
+                Thread(Runnable {
+                    //Do dome Network Request
+                    val res = getGifs(editText.text.toString())
+                    runOnUiThread {
+                        Log.v(TAG, res)
+                        //Update UI
+                    }
+                }).start()
                 hideKeyboard(textView)
                 handled = true
                 }
-
             handled
         }
 
 
     }
-    private fun getGifs(input: String){
+    private fun getGifs(input: String):String{
         val connection = URL("http://api.giphy.com/v1/gifs/search?q="+ input + "&api_key=dc6zaTOxFJmzC").openConnection() as HttpURLConnection
         try {
             val data = connection.inputStream.bufferedReader().readText()
-            // ... do something with "data"
+            return data
         } finally {
             connection.disconnect()
         }
