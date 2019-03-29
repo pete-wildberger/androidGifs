@@ -4,10 +4,11 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <TextView
+    <ImageView
             android:id="@+id/gif_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:textSize="20sp"
             android:padding="20dp"/>
 

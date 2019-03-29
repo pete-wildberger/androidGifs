@@ -14,6 +14,10 @@ import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
+import android.widget.ImageView
 
 
 val TAG:String = "TEXT"
@@ -30,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         editText.setOnEditorActionListener { textView, action, event ->
             var handled = false
             if (action == EditorInfo.IME_ACTION_DONE) {
+//                if(gifUrls. > 0){
+//                    gifUrls.clear()
+//                }
+
                 Log.v(TAG, "submit")
                 Thread(Runnable {
                     //Do dome Network Request
@@ -76,6 +84,7 @@ class MainActivity : AppCompatActivity() {
             connection.disconnect()
         }
     }
+
 
 
 

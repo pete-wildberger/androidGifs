@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.gif_list_item.view.*
+import com.bumptech.glide.Glide
+
 
 class GifsAdapter(val items : ArrayList<String>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -21,7 +23,8 @@ class GifsAdapter(val items : ArrayList<String>, val context: Context) : Recycle
 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.gifUrl?.text = items.get(position)
+        Glide.with(context).load(items.get(position)).into(holder?.gifUrl);
+
     }
 }
 
@@ -29,3 +32,20 @@ class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
     val gifUrl = view.gif_url
 }
+
+//private class DownloadImageTask(internal var bmImage: ImageView?) : AsyncTask<String, Void, Drawable>() {
+//
+//    override fun doInBackground(vararg url: String): Drawable? {
+//        try {
+//            val iS = URL(url.toString()).getContent() as InputStream
+//            return Drawable.createFromStream(iS, "src name")
+//        } catch (e: Exception) {
+//            return null
+//        }
+//
+//    }
+//
+//    override fun onPostExecute(result: Drawable?) {
+//        bmImage?.setImageDrawable(result)
+//    }
+//}
