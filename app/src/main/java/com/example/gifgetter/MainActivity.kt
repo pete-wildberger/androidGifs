@@ -10,8 +10,8 @@ import android.view.inputmethod.EditorInfo
 import android.graphics.drawable.Drawable
 import java.io.InputStream
 import android.support.v7.widget.LinearLayoutManager
-
-
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 val TAG:String = "TEXT"
@@ -33,10 +33,20 @@ class MainActivity : AppCompatActivity() {
                 Log.v(TAG, "submit")
                 Thread(Runnable {
                     //Do dome Network Request
-                    val res = getGifs(editText.text.toString())
+                    val rootResponse = JSONObject(getGifs(editText.text.toString()))
                     runOnUiThread {
-                        Log.v(TAG, res)
-                        //Update UI
+                        val dataKey = rootResponse.getString("data")
+                        val dataArr = JSONArray(dataKey)
+                        for (i in 0 until dataArr.length()) {
+                            val gif = JSONObject(dataArr.get(i).toString())
+                            val images = JSONObject(gif.getString("images"))
+                            val fixedWidth = JSONObject(images.getString("fixed_width"))
+                            val url = fixedWidth.getString("url")
+                            gifUrls.add(url)
+
+                            //Update UI
+                        }
+                        Log.v(TAG, "done" + gifUrls.toString())
                     }
                 }).start()
                 hideKeyboard(textView)
