@@ -5,15 +5,11 @@ import android.os.Bundle
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlinx.android.synthetic.main.activity_main.*
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.GridLayoutManager
 import java.io.InputStream
 import android.support.v7.widget.LinearLayoutManager
-import android.os.AsyncTask
 
 
 
