@@ -10,7 +10,9 @@ import android.view.inputmethod.EditorInfo
 import android.graphics.drawable.Drawable
 import java.io.InputStream
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 
@@ -24,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         // Creates a vertical Layout Manager
         gif_list.layoutManager = LinearLayoutManager(this)
 
-        // Access the RecyclerView Adapter and load the data into it
-        gif_list.adapter = GifsAdapter(gifUrls, this)
 
         editText.setOnEditorActionListener { textView, action, event ->
             var handled = false
@@ -35,17 +35,9 @@ class MainActivity : AppCompatActivity() {
                     //Do dome Network Request
                     val rootResponse = JSONObject(getGifs(editText.text.toString()))
                     runOnUiThread {
-                        val dataKey = rootResponse.getString("data")
-                        val dataArr = JSONArray(dataKey)
-                        for (i in 0 until dataArr.length()) {
-                            val gif = JSONObject(dataArr.get(i).toString())
-                            val images = JSONObject(gif.getString("images"))
-                            val fixedWidth = JSONObject(images.getString("fixed_width"))
-                            val url = fixedWidth.getString("url")
-                            gifUrls.add(url)
-
-                            //Update UI
-                        }
+                        parseGiphyJson(rootResponse)
+                        // Access the RecyclerView Adapter and load the data into it
+                        gif_list.adapter = GifsAdapter(gifUrls, this)
                         Log.v(TAG, "done" + gifUrls.toString())
                     }
                 }).start()
@@ -57,6 +49,24 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    private fun parseGiphyJson(rootObject:JSONObject){
+        try{
+        val dataKey = rootObject.getString("data")
+        val dataArr = JSONArray(dataKey)
+        for (i in 0 until dataArr.length()) {
+            val gif = JSONObject(dataArr.get(i).toString())
+            val images = JSONObject(gif.getString("images"))
+            val fixedWidth = JSONObject(images.getString("fixed_width"))
+            val url = fixedWidth.getString("url")
+            gifUrls.add(url)
+        }
+        } catch (e: JSONException) {
+                Toast.makeText(applicationContext, "Something wrong. Try Again!", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
+
+        }
+    }
     private fun getGifs(input: String):String{
         val connection = URL("http://api.giphy.com/v1/gifs/search?q="+ input + "&api_key=dc6zaTOxFJmzC").openConnection() as HttpURLConnection
         try {
@@ -67,14 +77,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun LoadImageFromWebOperations(url: String): Drawable? {
-        try {
-            val imageStream = URL(url).content as InputStream
-            return Drawable.createFromStream(imageStream, "src name")
-        } catch (e: Exception) {
-            return null
-        }
 
-    }
 
-}
