@@ -18,6 +18,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import android.widget.ImageView
+import java.net.URLEncoder
 
 
 val TAG:String = "TEXT"
@@ -39,8 +40,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 Log.v(TAG, "submit")
                 Thread(Runnable {
-                    //Do dome Network Request
-                    val rootResponse = JSONObject(getGifs(editText.text.toString()))
+                    //Do Network Request
+                    val query: String = editText.text.toString()
+                    val rootResponse = JSONObject(getGifs(URLEncoder.encode(query, "utf-8")))
                     runOnUiThread {
                         parseGiphyJson(rootResponse)
                         // Access the RecyclerView Adapter and load the data into it

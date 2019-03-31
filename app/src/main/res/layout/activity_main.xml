@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
     <EditText
-            android:layout_width="382dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Search"
             android:ems="10"
@@ -15,10 +15,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="36dp"
-            tools:layout_editor_absoluteX="16dp"
             android:id="@+id/editText"
-            android:inputType="text"/>
+            android:inputType="text" android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/gif_list"/>
     <android.support.v7.widget.RecyclerView
             android:id="@+id/gif_list"
             android:layout_width="match_parent"

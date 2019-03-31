@@ -24,7 +24,6 @@ class GifsAdapter(val items : ArrayList<String>, val context: Context) : Recycle
     // Binds each gif in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         Glide.with(context).load(items.get(position)).into(holder?.gifUrl);
-        holder?.gifUrl?.adjustViewBounds = true
     }
 }
 
