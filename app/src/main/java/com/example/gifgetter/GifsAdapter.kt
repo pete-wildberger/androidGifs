@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 
 class GifsAdapter(val items : ArrayList<String>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
-    // Gets the number of animals in the list
+    // Gets the number of gif in the list
     override fun getItemCount(): Int {
         return items.size
     }
@@ -21,10 +21,10 @@ class GifsAdapter(val items : ArrayList<String>, val context: Context) : Recycle
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.gif_list_item, parent, false))
     }
 
-    // Binds each animal in the ArrayList to a view
+    // Binds each gif in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         Glide.with(context).load(items.get(position)).into(holder?.gifUrl);
-
+        holder?.gifUrl?.adjustViewBounds = true
     }
 }
 

@@ -34,10 +34,9 @@ class MainActivity : AppCompatActivity() {
         editText.setOnEditorActionListener { textView, action, event ->
             var handled = false
             if (action == EditorInfo.IME_ACTION_DONE) {
-//                if(gifUrls. > 0){
-//                    gifUrls.clear()
-//                }
-
+                if(gifUrls.size > 0){
+                    gifUrls.clear()
+                }
                 Log.v(TAG, "submit")
                 Thread(Runnable {
                     //Do dome Network Request
