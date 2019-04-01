@@ -31,20 +31,3 @@ class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
     val gifUrl = view.gif_url
 }
-
-//private class DownloadImageTask(internal var bmImage: ImageView?) : AsyncTask<String, Void, Drawable>() {
-//
-//    override fun doInBackground(vararg url: String): Drawable? {
-//        try {
-//            val iS = URL(url.toString()).getContent() as InputStream
-//            return Drawable.createFromStream(iS, "src name")
-//        } catch (e: Exception) {
-//            return null
-//        }
-//
-//    }
-//
-//    override fun onPostExecute(result: Drawable?) {
-//        bmImage?.setImageDrawable(result)
-//    }
-//}

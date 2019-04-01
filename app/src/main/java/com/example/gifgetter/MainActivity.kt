@@ -7,24 +7,17 @@ import java.net.URL
 import kotlinx.android.synthetic.main.activity_main.*
 import android.util.Log
 import android.view.inputmethod.EditorInfo
-import android.graphics.drawable.Drawable
-import java.io.InputStream
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
-import android.widget.ImageView
 import java.net.URLEncoder
 
 
 val TAG:String = "TEXT"
 class MainActivity : AppCompatActivity() {
     val gifUrls: ArrayList<String> = ArrayList()
-    lateinit var searchString: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                 }
             handled
         }
-
 
     }
     private fun parseGiphyJson(rootObject:JSONObject){
